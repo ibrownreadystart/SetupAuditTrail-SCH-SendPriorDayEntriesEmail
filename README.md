@@ -7,13 +7,13 @@ run daily and get all SetupAuditTrail record entries from the prior day and send
 
 For the purpose of demonstration, a custom label is included with the recipient address which the flow targets for the daily send. This can be modified for more suitable use cases as needed within the flow or using custom metadata. 
 
-Special thanks to ForcePanda for his [article](forcepanda.wordpress.com/2021/03/23/how-to-send-table-in-emails-via-flow) on sending a table in emails in flow!
+Special thanks to ForcePanda for his [article](https://forcepanda.wordpress.com/2021/03/23/how-to-send-table-in-emails-via-flow/) on sending a table in emails in flow!
 
 The below installation links are also available to install as an unlocked package:
 
-Install in [Sandbox](test.salesforce.com/packaging/installPackage.apexp?p0=04tU1000000LFNRIA4).
+Install in [Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tU1000000LFNRIA4).
 
-Install in [Production](login.salesforce.com/packaging/installPackage.apexp?p0=04tU1000000LFNRIA4).
+Install in [Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tU1000000LFNRIA4).
 
 # Why create this and make it available?
 
