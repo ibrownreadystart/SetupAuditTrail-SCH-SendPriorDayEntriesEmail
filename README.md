@@ -23,4 +23,4 @@ This simple automation delivers a daily email to recipient(s) with a tabular lis
 
 # Why scheduled automation?
 
-SetupAuditTrail only supports query and retrieve calls. Record-triggered automation is not currently supported.
+SetupAuditTrail only supports query and retrieve calls. As a setup object, record-triggered automation is not supported.
