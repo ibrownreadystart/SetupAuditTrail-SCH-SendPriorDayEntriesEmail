@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Prior_Day_Setup_Audit_Trail_Report</name>
+        <label>Send Prior Day Setup Audit Trail Report</label>
+        <locationX>176</locationX>
+        <locationY>876</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Label.SetupAuditTrail_SendDailyEntries</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Prior Day Setup Audit Trail Report</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>textT_emailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>Add_column_to_table_markup</name>
+        <label>Add column to table markup</label>
+        <locationX>176</locationX>
+        <locationY>360</locationY>
+        <assignmentItems>
+            <assignToReference>varT_table</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varT_tableColumns</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Setup_Audit_Trail_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_table_row_to_table_markup</name>
+        <label>Add table row to table markup</label>
+        <locationX>264</locationX>
+        <locationY>576</locationY>
+        <assignmentItems>
+            <assignToReference>varT_table</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>forT_tableRow</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Setup_Audit_Trail_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Close_table_markup</name>
+        <label>Close table markup</label>
+        <locationX>176</locationX>
+        <locationY>768</locationY>
+        <assignmentItems>
+            <assignToReference>varT_table</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>&lt;/table&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Prior_Day_Setup_Audit_Trail_Report</targetReference>
+        </connector>
+    </assignments>
+    <description>The purpose of this scheduled flow is to get and send the prior day entries to the SetupAuditTrail object in a tabular report format via email to the designated recipients.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forDT_yesterday</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} - 1</expression>
+    </formulas>
+    <formulas>
+        <description>The purpose of this custom formula text resource is to store the html table row values.</description>
+        <name>forT_tableRow</name>
+        <dataType>String</dataType>
+        <expression>&apos;&lt;tr&gt;&lt;td style=&quot;border: 1px solid black;&quot;&gt;&apos; + TEXT({!Loop_Setup_Audit_Trail_Records.CreatedDate}) +
+&apos;&lt;/th&gt;&lt;td style=&quot;border: 1px solid black;&quot;&gt;&apos; + {!Loop_Setup_Audit_Trail_Records.CreatedBy.Alias} +  
+&apos;&lt;/th&gt;&lt;td style=&quot;border: 1px solid black;&quot;&gt;&apos; + {!Loop_Setup_Audit_Trail_Records.Section} + 
+&apos;&lt;/th&gt;&lt;td style=&quot;border: 1px solid black;&quot;&gt;&apos; + {!Loop_Setup_Audit_Trail_Records.Action} + 
+&apos;&lt;/th&gt;&lt;td style=&quot;border: 1px solid black;&quot;&gt;&apos; + {!Loop_Setup_Audit_Trail_Records.Display} + 
+&apos;&lt;/th&gt;&lt;/tr&gt;&apos;</expression>
+    </formulas>
+    <interviewLabel>SetupAuditTrail_SCH_SendDailyEntriesEmail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SetupAuditTrail_SCH_SendDailyEntriesEmail</label>
+    <loops>
+        <name>Loop_Setup_Audit_Trail_Records</name>
+        <label>Loop Setup Audit Trail Records</label>
+        <locationX>176</locationX>
+        <locationY>468</locationY>
+        <collectionReference>Get_Setup_Audit_Trail_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_table_row_to_table_markup</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Close_table_markup</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>The purpose of this custom data element is to retrieve records from the SetupAuditTrail object.</description>
+        <name>Get_Setup_Audit_Trail_Records</name>
+        <label>Get Setup Audit Trail Records</label>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_column_to_table_markup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CreatedDate</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>forDT_yesterday</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedDate</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>SetupAuditTrail</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Setup_Audit_Trail_Records</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-08-25</startDate>
+            <startTime>00:10:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Draft</status>
+    <textTemplates>
+        <name>textT_emailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Prior Day Setup Audit Trail Report&lt;/strong&gt;:&lt;/p&gt;&lt;p&gt;{!varT_table}&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <description>The purpose of this custom text variable resource is to store the html table style value.</description>
+        <name>varT_table</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>&lt;table style=&quot;width:100%; border: 1px solid black;&quot;&gt;</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>The purpose of this custom text variable resource is to store the html table column values.</description>
+        <name>varT_tableColumns</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>&lt;tr&gt;  &lt;th style=&quot;border: 1px solid black;&quot;&gt;Created Date&lt;/th&gt; &lt;th style=&quot;border: 1px solid black;&quot;&gt;Created By Name&lt;/th&gt; &lt;th style=&quot;border: 1px solid black;&quot;&gt;Section&lt;/th&gt; &lt;th style=&quot;border: 1px solid black;&quot;&gt;Action&lt;/th&gt; &lt;th style=&quot;border: 1px solid black;&quot;&gt;Display&lt;/th&gt; &lt;/tr&gt;</stringValue>
+        </value>
+    </variables>
+</Flow>
