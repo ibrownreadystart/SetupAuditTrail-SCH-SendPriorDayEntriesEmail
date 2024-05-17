@@ -5,6 +5,8 @@ Glad you asked!
 SetupAuditTrail-SCH-SendPriorDayEntriesEmail is a repo that includes a scheduled flow whose purpose is to 
 run daily and get all SetupAuditTrail record entries from the prior day and send them via email to the designated recipient.
 
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.]([https://github.com/ibrownreadystart/SetupAuditTrail_AnalyticsApp/blob/main/images/setupaudittrailanalyticsscreen.png](https://github.com/ibrownreadystart/SetupAuditTrail-SCH-SendPriorDayEntriesEmail/blob/main/images/PriorDaySetupAuditTrailReportEmail.png))
+
 For the purpose of demonstration, a custom label is included with the recipient address which the flow targets for the daily send. This can be modified for more suitable use cases as needed within the flow or using custom metadata. 
 
 Special thanks to ForcePanda for his [article](https://forcepanda.wordpress.com/2021/03/23/how-to-send-table-in-emails-via-flow/) on sending a table in emails in flow!
