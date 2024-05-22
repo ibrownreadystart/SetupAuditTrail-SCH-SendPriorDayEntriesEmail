@@ -19,8 +19,6 @@ Install in [Production](https://login.salesforce.com/packaging/installPackage.ap
 
 ### Why create this and make it available?
 
-The SetupAuditTrail object contains valuable insights into org changes that require 'pull' effort (read SOQL to Excel) to visualize (read additional spend for Event Monitoring, etc). 
-
 This simple automation delivers a daily email to recipient(s) with a tabular list of SetupAuditTrail entries. The flow is expandible to include additional filters or other modifications that apply to your use case.
 
 ### Why scheduled automation?
